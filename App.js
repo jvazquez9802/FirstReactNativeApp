@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View, Image } from 'react-native';
+import { Button, Text, View, Image, FlatList } from 'react-native';
 import { NavigationContainer as Nc } from '@react-navigation/native';
 import { createStackNavigator as Ns } from '@react-navigation/stack';
 
@@ -30,6 +30,24 @@ const styles = {
 
 const Stack = Ns();
 
+const DATA = [
+  {
+    title: 'Oferta',
+  },
+  {
+    title: 'Plan de estudios',
+  },
+  {
+    title: 'Organigrama',
+  },
+];
+
+const Item = ({ title }) => (
+  <View>
+    <Text style={styles.mainTitle}>{title}</Text>
+  </View>
+);
+
 function main({ navigation }){
   return (
     <View style={{flex:1}}>
@@ -47,10 +65,19 @@ function main({ navigation }){
 }
 
 function aboutUs({ navigation }){
+
+  const renderItem = ({ item }) => (
+    <Item title={item.title} />
+  );
+
   return(
     <View style={{flex:1}}>
       <View style={styles.mainView}>
-        <Text style={styles.mainTitle}>Acerca</Text>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
       </View>
     <Button style={styles.ctaButton} title="Regresar" onPress={()=>navigation.goBack()} />
     <Button style={styles.ctaButton} title="Regresar a la pagina principal" onPress={()=>navigation.navigate('Main')} />
